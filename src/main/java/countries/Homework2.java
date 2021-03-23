@@ -23,17 +23,17 @@ public class Homework2 {
     /**
      * Returns the longest country name translation.
      */
-    public Optional<String> streamPipeline1() {
-        // TODO
-        return null;
+    public Optional<String> streamPipeline1(){
+        return countries.stream()
+                .flatMap(country -> country.getTranslations().values().stream())
+                .max(Comparator.comparing(String::length));
     }
 
     /**
      * Returns the longest Italian (i.e., {@code "it"}) country name translation.
      */
     public Optional<String> streamPipeline2() {
-        // TODO
-        return null;
+        return countries.stream().flatMap(country -> country.getTranslations().entrySet().stream()).filter(etr -> etr.getKey().equals("it")).map(Map.Entry::getValue).max(Comparator.comparingInt(String::length));
     }
 
     /**
@@ -47,23 +47,25 @@ public class Homework2 {
      * Prints single word country names (i.e., country names that do not contain any space characters).
      */
     public void streamPipeline4() {
-        // TODO
+        countries.stream().map(Country::getName).filter(countryName -> (countryName.contains(" ")== false)).forEach(System.out::println);
     }
 
     /**
      * Returns the country name with the most number of words.
      */
     public Optional<String> streamPipeline5() {
-        // TODO
-        return null;
+        return countries.stream()
+                .map(name -> name.getName())
+                .max(Comparator.comparingInt(String::length));
     }
 
     /**
      * Returns whether there exists at least one capital that is a palindrome.
      */
     public boolean streamPipeline6() {
-        // TODO
-        return false;
+        return countries.stream()
+                .anyMatch(country -> new StringBuilder(country.getCapital())
+                        .equals(new StringBuilder(country.getCapital()).reverse()));
     }
 
     /**
